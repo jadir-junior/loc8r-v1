@@ -1,32 +1,28 @@
 extends layout
 
+include _includes/sharedHTMLfunctions
+
 block content
   header#banner.page-header
     .row
       .col-lg-6
-        h1 Loc8r
-          small &nbsp; Find places to work with wifi near you!
+        h1= pageHeader.title
+          small &nbsp; #{pageHeader.strapline}
   main
     section.row
       .col-xs-12.col-sm-8
         .row-list-group
-          .col-xs-12.list-group-item.card.shadow-1
-            h4
-              a(href="/location") Starcups
-              small &nbsp;
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star-empty
-                span.glyphicon.glyphicon-star-empty
-              span.badge.pull-right.badge-default 100m
-            p.address 125 High Street, Reading, RG6 1PS
-            ul.tags
-              li 
-                span.label.label-warning Hot drinks
-              li
-                span.label.label-warning Food
-              li
-                span.label.label-warning Premium wifi
+          each location in locations
+            .col-xs-12.list-group-item.card.shadow-1
+              h4
+                a(href="/location")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                span.badge.pull-right.badge-default= location.distance
+              p.address= location.address
+              ul.tags
+                each facility in location.facilities
+                  li
+                    span.label.label-warning= facility
       aside.col-xs-12.col-sm-4
-        p.lead Loc8r helps you find places to work when out and about.
+        p.lead= sidebar
