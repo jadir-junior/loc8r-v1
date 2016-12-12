@@ -1,0 +1,12 @@
+.panel {
+  border-radius: 0;
+
+  &.panel-primary {
+    @include shadow-2($primary-color);
+  }
+
+  .panel-heading {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}

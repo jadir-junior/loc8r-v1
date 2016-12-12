@@ -16,6 +16,10 @@ ul, menu, dir {
   -webkit-margin-end: 0px;
   -webkit-padding-start: 0; }
 
+.tags li {
+  display: inline-block;
+  padding: 0 .2rem; }
+
 footer {
   padding: 6rem 0; }
 
@@ -35,7 +39,31 @@ footer {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0; }
 
-.card .tags li {
-  display: inline-block; }
+.review {
+  padding-bottom: 5px; }
+  .review .well-sm {
+    border-radius: 0; }
+  .review .well {
+    border-radius: 0; }
+
+.panel-body .review-container {
+  padding-top: 0; }
+
+.review-header {
+  margin-bottom: 10px; }
+
+.reviewAuthor {
+  margin: 0 5px; }
+
+.reviewTimestamp {
+  color: #ccc; }
+
+.panel {
+  border-radius: 0; }
+  .panel.panel-primary {
+    box-shadow: 0 3px 6px rgba(51, 122, 183, 0.16), 0 3px 6px rgba(51, 122, 183, 0.23); }
+  .panel .panel-heading {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
 
 /*# sourceMappingURL=style.css.map */
