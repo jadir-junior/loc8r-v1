@@ -4,7 +4,7 @@ include _includes/sharedHTMLfunctions
 
 block content
   header.row.page-header
-    h1 Starcups
+    h1= location.name
   main.row
     .col-xs-12.col-md-9
       .row
@@ -16,8 +16,13 @@ block content
               .panel-heading
                 h2.panel-title Opening hours
               .panel-body
-                each openingHour in openingHours
-                  p= openingHour
+                each openingDay in location.openingTimes
+                  p
+                    | #{openingDay.days}: 
+                    if openingDay.closed
+                      | closed
+                    else
+                      | #{openingDay.opening} - #{openingDay.closing}
             .panel.panel-primary
               .panel-heading
                 h2.panel-title Facilities
@@ -40,16 +45,16 @@ block content
               a.btn.btn-default.pull-right(href="/location/review/new") Add review
               h2.panel-title Customer reviews
             .panel-body.review-container
-              each customer in customerReviews
+              each review in location.reviews
                 .row
                   .review
                     .well.well-sm.review-header
                       span.rating
-                        +outputRating(customer.rating)
-                      span.reviewAuthor= customer.author
-                      small.reviewTimestamp= customer.timestamp
+                        +outputRating(review.rating)
+                      span.reviewAuthor= review.author
+                      small.reviewTimestamp= review.timestamp
                     .col-xs-12
-                      p= customer.comment
+                      p= review.reviewText
     aside.col-xs-12.col-md-3
       p.lead= sidebar[0]
       p= sidebar[1]
