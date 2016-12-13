@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const readLine = require('readline');
 
-const dbURI = 'mongodb://localhost/Loc8r';
+let dbURI = 'mongodb://localhost/Loc8r';
+
+if(process.env.NODE_ENV === 'production') {
+  dbURI = process.env.MONGOLAB_URI;
+}
 
 mongoose.connect(dbURI);
-
 
 // Monitoring the Mongoose connection events
 

@@ -1,0 +1,17 @@
+http://whatsmylatlng.com
+http://mygeoposition.com
+
+mongodb://locer:locer@ds147995.mlab.com:47995/locer
+
+heroku config:set MONGOLAB_URI=mongodb://locer:locer@ds147995.mlab.com:47995/locer
+
+// dumping the data from the development databse
+mongodump -h localhost:27017 -d database -o ./output/folder
+
+// restoring the data to your live database
+mongorestore -h livehost:port -d livedatabasename -u username -p password ./pah/mongodump
+
+// connect in live database
+mongo.hostname:port/databse_name -u usename -p password
+
+mongo ds147995.mlab.com:47995/locer -u locer -p locer
