@@ -4,9 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-require('./app_server/models/db');
+require('./app_api/models/db');
 
-var index = require('./app_server/routes/index');
+var routes = require('./app_server/routes/index');
+const routesApi = require('./app_api/routes/locations');
 var users = require('./app_server/routes/users');
 
 var app = express();
@@ -29,7 +30,8 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/', routes);
+app.use('/api', routesApi);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
