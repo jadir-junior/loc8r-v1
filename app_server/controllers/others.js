@@ -11,3 +11,7 @@ module.exports.about = function(req, res) {
     ]
   });
 };
+
+module.exports.angularApp = (req, res) => {
+  res.render('layout', { title: "L0c8r" });
+};
