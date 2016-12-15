@@ -18,7 +18,7 @@ block content
               .panel-body
                 each openingDay in location.openingTimes
                   p
-                    | #{openingDay.days}: 
+                    | #{openingDay.days}:
                     if openingDay.closed
                       | closed
                     else
@@ -52,7 +52,8 @@ block content
                       span.rating
                         +outputRating(review.rating)
                       span.reviewAuthor= review.author
-                      small.reviewTimestamp= review.timestamp
+                      small.reviewTimestamp
+                        +formatDate(review.createdOn)
                     .col-xs-12
                       p= review.reviewText
     aside.col-xs-12.col-md-3

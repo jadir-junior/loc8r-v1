@@ -28,7 +28,7 @@ module.exports.locationsListByDistance = (req, res) => {
     maxDistance: theDistance.getMetersFromKms(20),
     num: 10
   };
-  if(!lng || !lat) {
+  if((!lng && lng!==0) || (!lat && lat!==0)) {
     sendJsonResponse(res, 404, {
       "message": "lng and lat query parametes are required"
     });
