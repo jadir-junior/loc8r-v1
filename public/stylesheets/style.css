@@ -4,6 +4,10 @@
 .shadow-2 {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
+#filter {
+  margin-left: 4px;
+  margin-bottom: 20px; }
+
 .page-header {
   margin: 6rem 0 2rem; }
 
