@@ -8,8 +8,12 @@ heroku config:set MONGOLAB_URI=mongodb://locer:locer@ds147995.mlab.com:47995/loc
 // dumping the data from the development databse
 mongodump -h localhost:27017 -d database -o ./output/folder
 
+-- mongodump -h localhost:27017 -d Loc8r -o ./output/Loc8r
+
 // restoring the data to your live database
-mongorestore -h livehost:port -d livedatabasename -u username -p password ./pah/mongodump
+mongorestore -h livehost:port -d livedatabasename -u username -p password ./path/mongodump
+
+-- mongorestore -h ds147995.mlab.com:47995 -d locer -u locer -p locer ./mongodump/Loc8r/
 
 // connect in live database
 mongo.hostname:port/databse_name -u usename -p password
