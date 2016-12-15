@@ -154,13 +154,13 @@ module.exports.locationsDeleteOne = (req, res) => {
   const locationid = req.params.locationid;
   if (locationid) {
     Loc
-      .findByIdAndRemove(locationid) {
+      .findByIdAndRemove((locationid) => {
         if (err) {
           sendJsonResponse(res, 400, err);
           return;
         }
         sendJsonResponse(res, 204, null);
-      }
+      });
   } else {
     sendJsonResponse(res, 404, {
       "message": "No location id"

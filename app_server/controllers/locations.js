@@ -1,5 +1,12 @@
-/* GET 'home' page */
-module.exports.homelist = function(req, res) {
+const request = require('request');
+const apiOptions = {
+  server: "http://localhost:3000"
+};
+if (process.env.NODE_ENV === 'production') {
+  apiOptions.server = "https://loc8r-v1.herokuapp.com/"
+}
+
+const renderHomepage = (req, res) => {
   res.render('locations-list', {
     title: 'Loc8r - find a place to work with wifi',
     pageHeader: {
@@ -31,6 +38,24 @@ module.exports.homelist = function(req, res) {
       }
     ]
   });
+}
+
+/* GET 'home' page */
+module.exports.homelist = function(req, res) {
+  const path = '/api/locations';
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: "GET",
+    json: {},
+    qs: {
+      lng:-46.9118265,
+      lat:-23.1652508,
+      maxDistance: 20
+    }
+  };
+  request(requestOptions, (err, response, body) => {
+    renderHomepage(req, res);
+  })
 };
 
 /* GET 'Location info' page */
