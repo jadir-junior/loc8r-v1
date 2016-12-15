@@ -68,6 +68,33 @@ const renderDetailPage = (req, res, locDetail) => {
   });
 }
 
+const renderReviewForm = (req, res, locDetail) => {
+  res.render('location-review-form', {
+    title: 'Review ' + locDetail.name + ' on Loc8r',
+    pageHeader: { title: 'Review ' + locDetail.name }
+  });
+}
+
+const getLocationInfo = (req, res, callback) => {
+  const path = "/api/locations/" + req.params.locationid;
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: "GET",
+    json: {}
+  };
+  request(requestOptions, (err, response, body) => {
+    let data = body;
+    if (response.statusCode === 200) {
+      data.coords = {
+        lng: body.coords[0],
+        lat: body.coords[1]
+      };
+      callback(req, res, data);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  })
+}
 /* GET 'home' page */
 module.exports.homelist = function(req, res) {
   const path = '/api/locations';
@@ -94,27 +121,37 @@ module.exports.homelist = function(req, res) {
 
 /* GET 'Location info' page */
 module.exports.locationInfo = function(req, res) {
-  const path = "/api/locations/" + req.params.locationid;
-  const requestOptions = {
-    url: apiOptions.server + path,
-    method: "GET",
-    json: {}
-  };
-  request(requestOptions, (err, response, body) => {
-    let data = body;
-    if (response.statusCode === 200) {
-      data.coords = {
-        lng: body.coords[0],
-        lat: body.coords[1]
-      };
-      renderDetailPage(req, res, data);
-    } else {
-      _showError(req, res, response.statusCode);
-    }
-  })
+  getLocationInfo(req, res, (req, res, responseData) => {
+    renderDetailPage(req, res, responseData);
+  });
 };
 
 /* GET 'Add review' page */
 module.exports.addReview = function(req, res) {
-  res.render('location-review-form', { title: 'Add review' });
+  getLocationInfo(req, res, (req, res, responseData) => {
+    renderReviewForm(req, res, responseData);
+  });
+};
+
+/* POST 'Add review' page */
+module.exports.doAddReview = function(req, res) {
+  const locationid = req.params.locationid;
+  const path = "/api/locations/" + locationid + "/reviews";
+  const postdata = {
+    author: req.body.name,
+    rating: parseInt(req.body.rating, 10),
+    reviewText: req.body.review
+  };
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: "POST",
+    json: postdata
+  };
+  request(requestOptions, (err, response, body) => {
+    if (response.statusCode === 201) {
+      res.redirect('/location/' + locationid);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
 };

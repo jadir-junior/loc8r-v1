@@ -6,7 +6,8 @@ var crtlOthers = require('../controllers/others');
 /* Locations pages */
 router.get('/', crtlLocations.homelist);
 router.get('/location/:locationid', crtlLocations.locationInfo);
-router.get('/location/review/new', crtlLocations.addReview);
+router.get('/location/:locationid/reviews/new', crtlLocations.addReview);
+router.post('/location/:locationid/reviews/new', crtlLocations.doAddReview);
 
 /* Other pages */
 router.get('/about', crtlOthers.about);
