@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="loc8rApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loc8r</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <base href="/">
+  </head>
+  <body>
+    <navigation></navigation>
+    <div class="container">
+      <div class="ng-view"></div>
+      <footer-generic></footer-generic>
+    </div>
+    <script src="/angular/angular.min.js"></script>
+    <script src="/lib/angular-route.min.js"></script>
+    <script src="/lib/angular-sanitize.min.js"></script>
+    <script src="/angular/loc8r.min.js"></script>
+  </body>
+</html>
