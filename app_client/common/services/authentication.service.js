@@ -1,9 +1,9 @@
 (function() {
   angular.module('loc8rApp').service('authentication', authentication);
 
-  authentication.$inject = ['$window'];
+  authentication.$inject = ['$window', '$http'];
 
-  function authentication ($window) {
+  function authentication ($window, $http) {
     var saveToken = function (token) {
       $window.localStorage['loc8r-token'] = token;
     };
@@ -15,14 +15,14 @@
     var register = function(user) {
       return $http.post('/api/register', user)
         .then(function success(data) {
-          saveToken(data.token);
+          saveToken(data.data.token);
         });
     };
 
     var login = function(user) {
       return $http.post('/api/login', user)
         .then(function success(data) {
-          saveToken(data.token);
+          saveToken(data.data.token);
         });
     };
 
