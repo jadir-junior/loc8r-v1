@@ -1,5 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('express-jwt');
+const auth = jwt({
+  secret: process.env.JWT_SECRET,
+  userProperty: 'payload'
+});
+
 const ctrlLocations = require('../controllers/locations');
 const ctrlReviews = require('../controllers/reviews');
 const ctrlAuth = require('../controllers/authentication');
@@ -12,10 +18,10 @@ router.put('/locations/:locationid', ctrlLocations.locationsUpdateOne);
 router.delete('/locations/:locationid', ctrlLocations.locationsDeleteOne);
 
 // reviews
-router.post('/locations/:locationid/reviews', ctrlReviews.reviewsCreate);
+router.post('/locations/:locationid/reviews', auth, ctrlReviews.reviewsCreate);
 router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOne);
-router.put('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsUpdateOne);
-router.delete('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsDeleteOne);
+router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsUpdateOne);
+router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne);
 
 // authentication
 router.post('/register', ctrlAuth.register);

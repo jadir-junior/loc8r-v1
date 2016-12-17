@@ -1,24 +1,27 @@
 const mongoose = require('mongoose');
 const Loc = mongoose.model('Location');
+const User = mongoose.model('User');
 
 module.exports.reviewsCreate = (req, res) => {
   const locationid = req.params.locationid;
-  if (locationid) {
-    Loc
-      .findById(locationid)
-      .select('reviews')
-      .exec((err, location) => {
-        if (err) {
-          sendJsonResponse(res, 400, err);
-        } else {
-          doAddReview(req, res, location);
-        }
+  getAuthor(req, res, function(req, res, userName){
+    if (locationid) {
+      Loc
+        .findById(locationid)
+        .select('reviews')
+        .exec((err, location) => {
+          if (err) {
+            sendJsonResponse(res, 400, err);
+          } else {
+            doAddReview(req, res, location, userName);
+          }
+        });
+    } else {
+      sendJsonResponse(res, 404, {
+        "message": "Not found, location id required"
       });
-  } else {
-    sendJsonResponse(res, 404, {
-      "message": "Not found, location id required"
-    });
-  }
+    }
+  });
 };
 
 module.exports.reviewsReadOne = (req, res) => {
@@ -164,14 +167,14 @@ const sendJsonResponse = (res, status, content) => {
   res.json(content);
 }
 
-const doAddReview = (req, res, location) => {
+const doAddReview = (req, res, location, author) => {
   if (!location) {
     sendJsonResponse(res, 404, {
       "message": "location id not found"
     });
   } else {
     location.reviews.push({
-      author: req.body.author,
+      author: author,
       rating: req.body.rating,
       reviewText: req.body.reviewText
     });
@@ -216,5 +219,30 @@ const doSetAverageRating = location => {
         console.log("Average rating updated to", ratingAverage);
       }
     });
+  }
+};
+
+const getAuthor = (req, res, callback) => {
+  if (req.payload && req.payload.email) {
+    User
+      .findOne({ email: req.payload.email })
+      .exec((err, user) => {
+        if (!user) {
+          sendJsonResponse(res, 404, {
+            "message": "User not found"
+          });
+          return;
+        } else if (err) {
+          console.log(err);
+          sendJsonResponse(res, 404, err);
+          return;
+        }
+        callback(req, res, user.name);
+      });
+  } else {
+    sendJsonResponse(res, 404, {
+      "message": "User not found"
+    });
+    return;
   }
 };
