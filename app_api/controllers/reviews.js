@@ -141,7 +141,7 @@ module.exports.reviewsDeleteOne = (req, res) => {
             "message": "reviewid not found"
           });
         } else {
-          location.review.id(req.params.reviewid).remove();
+          location.reviews.id(req.params.reviewid).remove();
           location.save(err => {
             if (err) {
               sendJsonResponse(res, 404, err);
