@@ -65,3 +65,4 @@ process.on('SIGTERM', () => {
 });
 
 require('./locations');
+require('./users');
