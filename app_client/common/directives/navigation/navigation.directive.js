@@ -4,7 +4,8 @@
   function navigation() {
     return {
       restric: 'AE',
-      templateUrl: '/common/directives/navigation/navigation.template.html'
+      templateUrl: '/common/directives/navigation/navigation.template.html',
+      controller: 'navigationCtrl as navvm'
     }
   }
 })();
