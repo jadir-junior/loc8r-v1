@@ -1,9 +1,9 @@
 (function() {
   angular.module('loc8rApp').controller('loginCtrl', loginCtrl);
 
-  loginCtrl.$inject = ['$location', 'authentication'];
+  loginCtrl.$inject = ['$location', 'authentication', '$rootScope'];
 
-  function loginCtrl($location, authentication) {
+  function loginCtrl($location, authentication, $rootScope) {
     var vm = this;
 
     vm.pageHeader = {
@@ -19,7 +19,6 @@
 
     vm.onSubmit = function() {
       vm.formError = "";
-      console.log(vm.credentials);
       if (!vm.credentials.email || !vm.credentials.password) {
         vm.formError = "All fields required, please try again";
         return false;
@@ -33,6 +32,7 @@
       authentication
         .login(vm.credentials)
           .then(function success() {
+            $rootScope.$emit('rootScope:login', 'Login!');
             $location.search('page', null);
             $location.path(vm.returnPage);
           }, function error(err) {

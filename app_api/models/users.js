@@ -26,7 +26,7 @@ userSchema.methods.validPassword = function(password) {
   return this.hash === hash;
 }
 
-userSchema.methods.generateJwt = () => {
+userSchema.methods.generateJwt = function(){
   let expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
 
